@@ -1,22 +1,104 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Apoio</title>
-        <link rel="stylesheet" href="/frontend/styles/style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apoio - Orçamentos de reparos sem visita</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
 </head>
 <body>
-        <div id="menu"><a href="login.html">Login</a> <a href="#">Contato</a>
-         <a href="#">Cadastre-se</a> <a href="#">Sobre</a> </div>
-         
-         
-         <h1 id="saudacao">Seja bem vindo a platafoma "APOIO"</h1>
+    <header>
+        <nav id="menu">
+            <a href="login.html">Login</a>
+            <a href="cadastro.html">Cadastre-se</a>
+            <a href="#apresentacao">Sobre</a>
+            <a href="#contato">Contato</a>
+        </nav>
+    </header>
 
-         
-        <div id="apresentacao">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur est nihil cupiditate, itaque magnam quisquam neque saepe sunt et recusandae quis iusto quas hic ipsam. Quas suscipit dolorum perspiciatis. Nisi laudantium reprehenderit labore voluptatum nesciunt autem deleniti aspernatur, obcaecati tempora blanditiis architecto nulla, doloremque fugiat est, repellendus eaque dolorem quaerat?
-        </div>
+    <main>
+        <h1 id="saudacao">Seja bem-vindo à plataforma Apoio</h1>
+
+        
+        <section id="apresentacao">
+            <img src="images/banner.jpg" alt="Ferramentas de reparo doméstico">
+            <h2>Quebrou o chuveiro? Apareceu um vazamento na pia?</h2>
+            <p>Encontrar um profissional de confiança costuma ser demorado: você liga, espera alguém vir até a sua casa só para olhar o problema e, muitas vezes, ainda paga por essa visita.</p>
+            <p><strong>No Apoio é diferente.</strong> Você manda fotos do problema e recebe orçamentos sem precisar de visita.</p>
+            <a href="cadastro.html" class="btn">Pedir orçamento</a>
+        </section>
+
+        
+        <section class="secao">
+            <h2>Como funciona</h2>
+            <div class="grade">
+                <div class="passo">
+                    <i class="fa-solid fa-camera"></i>
+                    <h3>1. Fotografe</h3>
+                    <p>Tire fotos do problema e conte o que aconteceu.</p>
+                </div>
+                <div class="passo">
+                    <i class="fa-solid fa-comments-dollar"></i>
+                    <h3>2. Receba orçamentos</h3>
+                    <p>Profissionais da sua região enviam propostas.</p>
+                </div>
+                <div class="passo">
+                    <i class="fa-solid fa-star"></i>
+                    <h3>3. Escolha e avalie</h3>
+                    <p>Compare, contrate e avalie o serviço.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== SERVIÇOS ===== -->
+        <section class="secao">
+            <h2>Serviços</h2>
+            <div class="grade">
+                <div class="servico">
+                    <img src="images/servico-eletrica.jpg" alt="Eletricista consertando tomada">
+                    <h3>Elétrica</h3>
+                </div>
+                <div class="servico">
+                    <img src="images/servico-hidraulica.jpg" alt="Encanador consertando pia">
+                    <h3>Hidráulica</h3>
+                </div>
+                <div class="servico">
+                    <img src="images/servico-alvenaria.jpg" alt="Pedreiro assentando tijolos">
+                    <h3>Alvenaria</h3>
+                </div>
+                <div class="servico">
+                    <img src="images/servico-pintura.jpg" alt="Pintor pintando parede">
+                    <h3>Pintura</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PROFISSIONAIS (o JS vai preencher com GET /prestadores) ===== -->
+        <section class="secao">
+            <h2>Profissionais em destaque</h2>
+            <div id="listaPrestadores" class="grade">
+                <p>Carregando profissionais...</p>
+            </div>
+        </section>
+
+        <!-- ===== PARA PRESTADORES ===== -->
+        <section class="secao">
+            <div class="caixa duas-colunas">
+                <img src="images/prestador.jpg" alt="Profissional consultando pedidos no celular">
+                <div>
+                    <h2>É profissional da área?</h2>
+                    <p>Receba pedidos com fotos, envie orçamentos pelo celular e economize tempo e combustível com visitas que nem sempre viram serviço.</p>
+                    <a href="cadastro.html" class="btn">Quero me cadastrar</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contato">
+        <p>&copy; 2026 Apoio - Projeto Interdisciplinar III - Fatec Franca</p>
+    </footer>
+    <script src="js/app.js"></script>
 </body>
 </html>

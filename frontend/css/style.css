@@ -1,0 +1,326 @@
+/* ===== Variáveis (cores do site) ===== */
+:root {
+    --cor-principal: rgb(216, 199, 48);   /* amarelo */
+    --cor-escura: #000;                   /* preto */
+    --cor-escura-hover: #333;
+    --cor-card: #fff;
+    --cor-borda: #999;
+}
+
+/* ===== Reset básico ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--cor-principal);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5em;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== Menu ===== */
+#menu {
+    background-color: var(--cor-escura);
+    font-size: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    padding: 10px 20px;
+}
+
+#menu a {
+    text-decoration: none;
+    color: #fff;
+}
+
+#menu a:hover {
+    color: var(--cor-principal);
+}
+
+/* ===== Página inicial ===== */
+main {
+    flex: 1;
+}
+
+#saudacao {
+  margin-top: 20px;
+    text-align: center;
+    padding: 10px;
+}
+
+#apresentacao {
+    background-color: var(--cor-card);
+    max-width: 640px;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#apresentacao h2 {
+    margin-bottom: 15px;
+}
+
+#apresentacao p {
+    margin-bottom: 15px;
+}
+/* ===== Imagem da apresentação ===== */
+#apresentacao img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* ===== Botão (mesmo estilo do botão do login) ===== */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 18px;
+    color: #fff;
+    background-color: var(--cor-escura);
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: var(--cor-escura-hover);
+}
+
+/* ===== Seções ===== */
+.secao {
+    padding: 20px 20px 40px;
+}
+
+.secao h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.grade {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+/* ===== Cards (iguais à caixa da apresentação) ===== */
+.passo,
+.servico,
+.caixa {
+    background-color: var(--cor-card);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.passo,
+.servico {
+    text-align: center;
+}
+
+.passo i {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.passo h3,
+.servico h3 {
+    margin-bottom: 8px;
+}
+
+.servico img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* ===== Imagem + texto lado a lado ===== */
+.duas-colunas {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 30px;
+}
+
+.duas-colunas img,
+.duas-colunas div {
+    flex: 1;
+    min-width: 260px;
+}
+
+.duas-colunas img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.duas-colunas h2 {
+    text-align: left;
+}
+
+.duas-colunas p {
+    margin-bottom: 20px;
+}
+/* ===== Rodapé ===== */
+footer {
+    background-color: var(--cor-escura);
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+}
+
+/* ===== Login (card e formulário) ===== */
+.card {
+    background-color: var(--cor-card);
+    max-width: 450px;
+    margin: 60px auto;
+    padding: 32px 36px;
+    border-radius: 12px;
+}
+
+.card h2 {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+}
+
+.campo label {
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.campo input {
+    font-size: 16px;
+    padding: 10px 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    outline: none;
+}
+
+.campo input:focus {
+    border-color: var(--cor-escura);
+    box-shadow: 0 0 0 2px var(--cor-principal);
+}
+
+form button {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    color: #fff;
+    background-color: var(--cor-escura);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: var(--cor-escura-hover);
+}
+
+.links {
+    margin-top: 18px;
+    text-align: center;
+}
+
+.links a {
+    color: var(--cor-escura);
+
+
+}
+/* ########## Cadastro #################3 */
+
+fieldset {
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 16px 20px 4px;
+    margin-bottom: 20px;
+}
+
+legend {
+    padding: 0 8px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+#formCadastro .campo:first-child {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 24px;
+}
+
+#formCadastro .campo:first-child span {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#formCadastro .campo:first-child label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+
+input[type="radio"],
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--cor-escura);
+    cursor: pointer;
+}
+
+
+#grupoEspecialidades {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding-bottom: 16px;
+}
+
+#grupoEspecialidades label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+#uf {
+    text-transform: uppercase;
+}
+
+
+.campo input::placeholder {
+    color: var(--cor-borda);
+}
+
+
+#mensagem {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+.oculto {
+    display: none;
+}
