@@ -1,13 +1,13 @@
-/* ===== Variáveis (cores do site) ===== */
+/* cores do site*/
 :root {
-    --cor-principal: rgb(216, 199, 48);   /* amarelo */
-    --cor-escura: #000;                   /* preto */
+    --cor-principal: rgb(216, 199, 48);   
+    --cor-escura: #000;                   
     --cor-escura-hover: #333;
     --cor-card: #fff;
     --cor-borda: #999;
 }
 
-/* ===== Reset básico ===== */
+/* Reset básico */
 * {
     margin: 0;
     padding: 0;
@@ -322,5 +322,5 @@ input[type="checkbox"] {
 
 
 .oculto {
-    display: none;
+    display: none !important;
 }

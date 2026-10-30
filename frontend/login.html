@@ -1,22 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Apoio-login</title>
-        <link rel="stylesheet" href="/frontend/styles/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apoio - Entrar</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-
   
-        <div id="menu"><a href="login.html">Login</a> <a href="#">Contato</a>
-         <a href="#">Cadastre-se</a> <a href="#">Sobre</a> </div>
-         
-
+    <header>
+        <nav id="menu">
+            
+            <a href="index.html">Início</a>
+            <a href="cadastro.html">Cadastre-se</a>
+            <a href="index.html#apresentacao">Sobre</a>
+            <a href="#contato">Contato</a>
+        </nav>
+    </header>
   
-
   <main class="card">
-    <h2>Seja Bem vindo</h2>
+    <h2>Seja bem-vindo</h2>
+
 
     <form id="formLogin">
       <div class="campo">
@@ -39,37 +45,11 @@
       Não tem conta? <a href="cadastro.html">Cadastre-se</a>
     </div>
   </main>
+   <footer id="contato">
+    <p>&copy; 2026 Apoio - Projeto Interdisciplinar III - Fatec Franca</p>
+  </footer>
 
-  <script>
-    const form = document.getElementById("formLogin");
-    const mensagem = document.getElementById("mensagem");
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const email = document.getElementById("email").value.trim();
-      const senha = document.getElementById("senha").value;
-
-      if (senha.length < 6) {
-        mensagem.textContent = "A senha deve ter pelo menos 6 caracteres.";
-        return;
-      }
-
-      mensagem.textContent = "";
-
-      // Aqui você conecta com o seu backend, por exemplo:
-      // fetch("http://localhost:3000/login", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ email, senha })
-      // })
-      //   .then(res => res.json())
-      //   .then(data => { window.location.href = "index.html"; })
-      //   .catch(() => { mensagem.textContent = "Erro ao fazer login."; });
-
-      console.log("Login enviado:", email);
-    });
-  </script>
-
+  <script src="js/login.js"></script>
 </body>
+
 </html>
