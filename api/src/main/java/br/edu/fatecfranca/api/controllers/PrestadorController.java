@@ -68,7 +68,7 @@ public class PrestadorController {
        }
 
 
-       Prestador.setId(id);
+       prestador.setId(id);
 
 
        Prestador prestadorAtualizado = service.salvar(prestador);
