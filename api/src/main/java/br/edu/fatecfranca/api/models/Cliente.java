@@ -3,18 +3,36 @@ package br.edu.fatecfranca.api.models;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
+@Document(collection = "clientes")
 public class Cliente {
         
    @Id
    private String id;
 
 
+   @NotBlank(message = "O nome é obrigatório")
    private String nome;
+
+   @NotBlank(message = "O CPF é obrigatório")
+   private String cpf;
+
+   @NotBlank(message = "O telefone é obrigatório")
    private String telefone;
+
+   @NotBlank(message = "O e-mail é obrigatório")
+   
+   @Email(message = "Informe um e-mail válido")
    private String email;
 
 
+   @NotEmpty(message = "Informe ao menos um endereço")
+   @Valid
    private List<Endereco> enderecos;
 
 
