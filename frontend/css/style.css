@@ -203,7 +203,8 @@ footer {
     margin-bottom: 6px;
 }
 
-.campo input {
+.campo input,
+.campo textarea  {
     font-size: 16px;
     padding: 10px 12px;
     border: 1px solid var(--cor-borda);
@@ -211,7 +212,8 @@ footer {
     outline: none;
 }
 
-.campo input:focus {
+.campo input:focus,
+.campo textarea:focus {
     border-color: var(--cor-escura);
     box-shadow: 0 0 0 2px var(--cor-principal);
 }
@@ -240,6 +242,10 @@ form button:hover {
     color: var(--cor-escura);
 
 
+}
+.campo textarea {
+    font-family: inherit;
+    resize: vertical;
 }
 /* ########## Cadastro #################3 */
 

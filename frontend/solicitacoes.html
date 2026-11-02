@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Apoio - Minhas solicitações</title>
+        <link rel="shortcut icon" href="images/favicon.jpg" type="image/jpeg">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+        <header>
+                <nav id="menu">
+                        <a href="index.html">Início</a>
+                        <a href="solicitacoes.html">Minhas solicitações</a>
+                        <a href="orcamentos.html">Orçamentos</a>
+                        <a href="#contato">Contato</a>
+                </nav>
+        </header>
+
+        <main>
+                <section class="card">
+                        <h2>Pedir orçamento</h2>
+
+                        <form id="formSolicitacao">
+                                <div class="campo">
+                                        <label for="descricao">Descreva o problema</label>
+                                        <textarea id="descricao" rows="4"
+                                                placeholder="Ex.: O chuveiro parou de esquentar ontem à noite."
+                                                required></textarea>
+                                </div>
+
+                                <div class="campo">
+                                        <label for="fotos">Fotos do problema</label>
+                                        <input type="file" id="fotos" accept="image/*" multiple required>
+                                </div>
+
+                                <button type="submit">Enviar pedido</button>
+                                <p id="mensagem"></p>
+                        </form>
+                </section>
+
+                
+                <section class="secao">
+                        <h2>Minhas solicitações</h2>
+                        <div id="listaSolicitacoes" class="grade">
+                                <p>Carregando solicitações...</p>
+                        </div>
+                </section>
+        </main>
+
+        <footer id="contato">
+                <p>&copy; 2026 Apoio - Projeto Interdisciplinar III - Fatec Franca</p>
+        </footer>
+
+        <script src="js/solicitacoes.js"></script>
+</body>
+
+</html>
