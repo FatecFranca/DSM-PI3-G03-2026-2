@@ -19,7 +19,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/prestadores")
-
 public class PrestadorController {
 
     private final PrestadorService service;
@@ -42,6 +41,11 @@ public class PrestadorController {
 
     @PostMapping
     public ResponseEntity<Prestador> criar(@Valid @RequestBody Prestador prestador) {
+        prestador.setId(null);
+        prestador.setVerificado(false);
+        prestador.setNotaMedia(0.0);
+        prestador.setQtdAvaliacao(0);
+
         Prestador prestadorSalvo = service.salvar(prestador);
 
         return ResponseEntity
@@ -54,11 +58,15 @@ public class PrestadorController {
             @PathVariable String id,
             @Valid @RequestBody Prestador prestador) {
 
-        if (service.buscarPorId(id).isEmpty()) {
+        Prestador existente = service.buscarPorId(id).orElse(null);
+        if (existente == null) {
             return ResponseEntity.notFound().build();
         }
 
         prestador.setId(id);
+        prestador.setVerificado(existente.getVerificado());
+        prestador.setNotaMedia(existente.getNotaMedia());
+        prestador.setQtdAvaliacao(existente.getQtdAvaliacao());
 
         Prestador prestadorAtualizado = service.salvar(prestador);
 
