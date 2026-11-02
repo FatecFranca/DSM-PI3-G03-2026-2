@@ -15,81 +15,65 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.fatecfranca.api.models.Cliente;
 import br.edu.fatecfranca.api.services.ClienteService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
 
+    private final ClienteService service;
 
+    public ClienteController(ClienteService service) {
+        this.service = service;
+    }
 
-   private final ClienteService service;
+    @GetMapping
+    public List<Cliente> listarTodos() {
+        return service.listarTodos();
+    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Cliente> buscarPorId(@PathVariable String id) {
+        return service.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
-   public ClienteController(ClienteService service) {
-       this.service = service;
-   }
+    @PostMapping
+    public ResponseEntity<Cliente> criar(@Valid @RequestBody Cliente cliente) {
+        Cliente clienteSalvo = service.salvar(cliente);
 
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(clienteSalvo);
+    }
 
-   @GetMapping
-   public List<Cliente> listarTodos() {
-       return service.listarTodos();
-   }
+    @PutMapping("/{id}")
+    public ResponseEntity<Cliente> atualizar(
+            @PathVariable String id,
+            @Valid @RequestBody Cliente cliente) {
 
+        if (service.buscarPorId(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
 
-   @GetMapping("/{id}")
-   public ResponseEntity<Cliente> buscarPorId(@PathVariable String id) {
-       return service.buscarPorId(id)
-               .map(ResponseEntity::ok)
-               .orElse(ResponseEntity.notFound().build());
-   }
+        cliente.setId(id);
 
+        Cliente clienteAtualizado = service.salvar(cliente);
 
-   @PostMapping
-   public ResponseEntity<Cliente> criar(@RequestBody Cliente cliente) {
-       Cliente clienteSalvo = service.salvar(cliente);
+        return ResponseEntity.ok(clienteAtualizado);
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluir(@PathVariable String id) {
 
-       return ResponseEntity
-               .status(HttpStatus.CREATED)
-               .body(clienteSalvo);
-   }
+        if (service.buscarPorId(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
 
+        service.excluir(id);
 
-   @PutMapping("/{id}")
-   public ResponseEntity<Cliente> atualizar(
-           @PathVariable String id,
-           @RequestBody Cliente cliente) {
+        return ResponseEntity.noContent().build();
+    }
 
-
-       if (service.buscarPorId(id).isEmpty()) {
-           return ResponseEntity.notFound().build();
-       }
-
-
-       cliente.setId(id);
-
-
-       Cliente clienteAtualizado = service.salvar(cliente);
-
-
-       return ResponseEntity.ok(clienteAtualizado);
-   }
-
-
-   @DeleteMapping("/{id}")
-   public ResponseEntity<Void> excluir(@PathVariable String id) {
-
-
-       if (service.buscarPorId(id).isEmpty()) {
-           return ResponseEntity.notFound().build();
-       }
-
-
-       service.excluir(id);
-
-
-       return ResponseEntity.noContent().build();
-   }
-
-        
 }

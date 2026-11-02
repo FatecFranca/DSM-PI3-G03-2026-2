@@ -1,8 +1,10 @@
-package br.edu.fatecfranca.api.controllers;
+package br.edu.fatecfranca.api.exceptions;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +15,21 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, Object>> tratarValidacao(MethodArgumentNotValidException exception) {
-        String detalhes = exception.getBindingResult().getFieldErrors().stream()
-                .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                .collect(Collectors.joining("; "));
-        return resposta(HttpStatus.BAD_REQUEST, detalhes);
+      @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, List<String>>> tratarValidacao(
+            MethodArgumentNotValidException exception) {
+
+        Map<String, List<String>> erros = new LinkedHashMap<>();
+
+        for (var erro : exception.getBindingResult().getFieldErrors()) {
+            String campo = erro.getField();
+            if (!erros.containsKey(campo)) {
+                erros.put(campo, new ArrayList<>());
+            }
+            erros.get(campo).add(erro.getDefaultMessage());
+        }
+
+        return ResponseEntity.badRequest().body(erros);
     }
 
     @ExceptionHandler(ResponseStatusException.class)
