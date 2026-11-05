@@ -1,7 +1,7 @@
 /* cores do site*/
 :root {
-    --cor-principal: rgb(216, 199, 48);   
-    --cor-escura: #000;                   
+    --cor-principal: rgb(216, 199, 48);
+    --cor-escura: #000;
     --cor-escura-hover: #333;
     --cor-card: #fff;
     --cor-borda: #999;
@@ -48,7 +48,7 @@ main {
 }
 
 #saudacao {
-  margin-top: 20px;
+    margin-top: 20px;
     text-align: center;
     padding: 10px;
 }
@@ -68,6 +68,7 @@ main {
 #apresentacao p {
     margin-bottom: 15px;
 }
+
 /* ===== Imagem da apresentação ===== */
 #apresentacao img {
     width: 100%;
@@ -170,6 +171,7 @@ main {
 .duas-colunas p {
     margin-bottom: 20px;
 }
+
 /* ===== Rodapé ===== */
 footer {
     background-color: var(--cor-escura);
@@ -204,7 +206,7 @@ footer {
 }
 
 .campo input,
-.campo textarea  {
+.campo textarea {
     font-size: 16px;
     padding: 10px 12px;
     border: 1px solid var(--cor-borda);
@@ -243,10 +245,12 @@ form button:hover {
 
 
 }
+
 .campo textarea {
     font-family: inherit;
     resize: vertical;
 }
+
 /* ########## Cadastro #################3 */
 
 fieldset {
@@ -333,4 +337,41 @@ input[type="checkbox"] {
 
 .passo .btn {
     margin-top: 15px;
+}
+
+/* ===== Botões fora de formulário ===== */
+.btn {
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+    margin: 8px 4px 0;
+}
+
+.btn-claro {
+    background-color: var(--cor-card);
+    color: var(--cor-escura);
+    border: 2px solid var(--cor-escura);
+}
+
+.btn-claro:hover {
+    background-color: #eee;
+}
+
+/*Página de orçamentos*/
+.subtitulo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#listaOrcamentos {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+/* ===== Cabeçalho das páginas internas ===== */
+.cabecalho-pagina {
+    max-width: 1000px;     /* mesma largura da .grade, alinha com os cards */
+    margin: 0 auto 20px;   /* centraliza e dá espaço antes dos cards */
+}
+
+.cabecalho-pagina .subtitulo {
+    margin-bottom: 0;      /* dentro da caixa, o espaço já vem do padding */
 }
