@@ -366,12 +366,43 @@ input[type="checkbox"] {
 #listaOrcamentos {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
-/* ===== Cabeçalho das páginas internas ===== */
+
+/* ################################################################################## */
+/*Cabeçalho das páginas internas */
+
 .cabecalho-pagina {
-    max-width: 1000px;     /* mesma largura da .grade, alinha com os cards */
-    margin: 0 auto 20px;   /* centraliza e dá espaço antes dos cards */
+    max-width: 1000px;     
+    margin: 0 auto 20px;   
 }
 
 .cabecalho-pagina .subtitulo {
-    margin-bottom: 0;      /* dentro da caixa, o espaço já vem do padding */
+    margin-bottom: 0;      }
+
+/*Estrelas da avaliação */
+.estrelas {
+    display: flex;
+    flex-direction: row-reverse;   
+    justify-content: center;
+    gap: 6px;
+}
+
+.estrelas input {
+    display: none;                 
+}
+
+.estrelas label {
+    font-size: 36px;
+    color: #ccc;                   
+    cursor: pointer;
+}
+
+
+.estrelas input:checked ~ label,
+.estrelas label:hover,
+.estrelas label:hover ~ label {
+    color: var(--cor-principal);
+}
+
+.cabecalho-pagina + .card {
+    margin-top: 0;   
 }

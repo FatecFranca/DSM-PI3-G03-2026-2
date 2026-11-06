@@ -10,35 +10,31 @@ import br.edu.fatecfranca.api.repositories.ClienteRepository;
 
 @Service
 public class ClienteService {
-    
 
+    private final ClienteRepository repository;
 
+    public ClienteService(ClienteRepository repository) {
+        this.repository = repository;
+    }
 
-   private final ClienteRepository repository;
+    public List<Cliente> listarTodos() {
+        return repository.findAll();
+    }
 
+    public Optional<Cliente> buscarPorId(String id) {
+        return repository.findById(id);
+    }
 
-   public ClienteService(ClienteRepository repository) {
-       this.repository = repository;
-   }
+    public Cliente salvar(Cliente cliente) {
+        return repository.save(cliente);
+    }
 
+    public void excluir(String id) {
+        repository.deleteById(id);
+    }
 
-   public List<Cliente> listarTodos() {
-       return repository.findAll();
-   }
-
-
-   public Optional<Cliente> buscarPorId(String id) {
-       return repository.findById(id);
-   }
-
-
-   public Cliente salvar(Cliente cliente) {
-       return repository.save(cliente);
-   }
-
-
-   public void excluir(String id) {
-       repository.deleteById(id);
-   }
+    public Optional<Cliente> buscarPorEmail(String email) {
+        return repository.findByEmail(email);
+    }
 
 }

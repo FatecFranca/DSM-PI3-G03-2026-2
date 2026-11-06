@@ -12,8 +12,8 @@ form.addEventListener("submit", function (evento) {
 
         const prestador = {
                 nome: document.getElementById("nome").value,
-                cpf: document.getElementById("cpf").value,
-                telefone: document.getElementById("telefone").value,
+                cpf: somenteNumeros(document.getElementById("cpf").value),
+      telefone: somenteNumeros(document.getElementById("telefone").value),
                 email: document.getElementById("email").value,
                 especialidade: especialidades,
                 enderecos: [

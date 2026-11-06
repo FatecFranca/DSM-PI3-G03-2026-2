@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.fatecfranca.api.models.Cliente;
 import br.edu.fatecfranca.api.models.Prestador;
 import br.edu.fatecfranca.api.services.PrestadorService;
 import jakarta.validation.Valid;
@@ -35,6 +36,13 @@ public class PrestadorController {
     @GetMapping("/{id}")
     public ResponseEntity<Prestador> buscarPorId(@PathVariable String id) {
         return service.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+    
+        @GetMapping("/email/{email}")
+    public ResponseEntity<Prestador> buscarPorEmail(@PathVariable String email) {
+        return service.buscarPorEmail(email)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

@@ -4,11 +4,21 @@ const form = document.getElementById("formCadastro");
 form.addEventListener("submit", function (evento) {
    evento.preventDefault();
 
+   const senha = document.getElementById("senha").value;
+   const confirmarSenha = document.getElementById("confirmarSenha").value;
+   const mensagem = document.getElementById("mensagem");
+
+   if (senha !== confirmarSenha) {
+      mensagem.textContent = "As senhas não são iguais.";
+      return;
+   }
+
    const cliente = {
       nome: document.getElementById("nome").value,
-      cpf: document.getElementById("cpf").value,
-      telefone: document.getElementById("telefone").value,
+      cpf: somenteNumeros(document.getElementById("cpf").value),
+      telefone: somenteNumeros(document.getElementById("telefone").value),
       email: document.getElementById("email").value,
+      senha: senha,
       enderecos: [
          {
             logradouro: document.getElementById("logradouro").value,
@@ -20,8 +30,6 @@ form.addEventListener("submit", function (evento) {
       ]
    };
    console.log(cliente);
-
-   const mensagem = document.getElementById("mensagem");
 
    fetch("http://localhost:8888/clientes", {
       method: "POST",

@@ -5,3 +5,5 @@ server.port=8888
 # Desabilita (por enquanto) o acesso a banco de dados
 spring.autoconfigure.exclude=org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration
 
+# Serve as páginas do front-end (pasta frontend, ao lado da pasta api)
+spring.web.resources.static-locations=file:../frontend/

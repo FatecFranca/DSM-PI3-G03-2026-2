@@ -38,6 +38,12 @@ public class ClienteController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+        @GetMapping("/email/{email}")
+    public ResponseEntity<Cliente> buscarPorEmail(@PathVariable String email) {
+        return service.buscarPorEmail(email)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     @PostMapping
     public ResponseEntity<Cliente> criar(@Valid @RequestBody Cliente cliente) {
