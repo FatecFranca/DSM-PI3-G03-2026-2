@@ -1,20 +1,21 @@
 package br.edu.fatecfranca.api.dtos;
 
-import jakarta.validation.constraints.NotBlank;
+import br.edu.fatecfranca.api.enums.StatusOrcamento;
+import jakarta.validation.constraints.NotNull;
 
 public class AtualizarStatusRequest {
     
-    @NotBlank(message = "O status é obrigatório")
-    private String status;
+    @NotNull(message = "O status é obrigatório e deve ser um valor válido")
+    private StatusOrcamento status;
 
     public AtualizarStatusRequest() {
     }
 
-    public String getStatus() { 
+    public StatusOrcamento getStatus() { 
         return status; 
     }
 
-    public void setStatus(String status) { 
+    public void setStatus(StatusOrcamento status) { 
         this.status = status; 
     }
 }

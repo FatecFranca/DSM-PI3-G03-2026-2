@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.fatecfranca.api.models.Cliente;
 import br.edu.fatecfranca.api.models.Prestador;
 import br.edu.fatecfranca.api.services.PrestadorService;
 import jakarta.validation.Valid;
@@ -78,6 +77,7 @@ public class PrestadorController {
 
         Prestador prestadorAtualizado = service.salvar(prestador);
 
+
         return ResponseEntity.ok(prestadorAtualizado);
     }
 
@@ -87,8 +87,8 @@ public class PrestadorController {
         if (service.buscarPorId(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-
         service.excluir(id);
+
 
         return ResponseEntity.noContent().build();
     }

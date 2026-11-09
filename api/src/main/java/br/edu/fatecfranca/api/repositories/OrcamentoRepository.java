@@ -3,6 +3,8 @@ package br.edu.fatecfranca.api.repositories;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+
+import br.edu.fatecfranca.api.enums.StatusOrcamento;
 import br.edu.fatecfranca.api.models.Orcamento;
 
 public interface OrcamentoRepository extends MongoRepository<Orcamento, String> {
@@ -14,6 +16,6 @@ public interface OrcamentoRepository extends MongoRepository<Orcamento, String> 
     
     boolean existsBySolicitacaoIdAndPrestadorId(String solicitacaoId, String prestadorId);
 
-    boolean existsBySolicitacaoIdAndStatusIgnoreCase(String solicitacaoId, String status);
+    boolean existsBySolicitacaoIdAndStatus(String solicitacaoId, StatusOrcamento status);
     
 }

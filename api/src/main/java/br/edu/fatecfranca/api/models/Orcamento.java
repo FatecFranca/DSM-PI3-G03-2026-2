@@ -3,6 +3,8 @@ package br.edu.fatecfranca.api.models;
 import java.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import br.edu.fatecfranca.api.enums.StatusOrcamento;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -32,7 +34,7 @@ public class Orcamento {
 
     private Integer prazoDias;
     private String mensagem;
-    private String status;
+    private StatusOrcamento status;
     private LocalDateTime dataEnvio;
 
     public Orcamento() {
@@ -86,11 +88,11 @@ public class Orcamento {
         this.mensagem = mensagem; 
     }
 
-    public String getStatus() { 
+    public StatusOrcamento getStatus() { 
         return status; 
     }
 
-    public void setStatus(String status) { 
+    public void setStatus(StatusOrcamento status) { 
         this.status = status; 
     }
 

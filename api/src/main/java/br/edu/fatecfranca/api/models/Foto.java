@@ -17,10 +17,22 @@ public class Foto {
         this.dataEnvio = dataEnvio;
     }
 
-    public String getUrl() { return url; }
-    public void setUrl(String url) { this.url = url; }
-    public String getLegenda() { return legenda; }
-    public void setLegenda(String legenda) { this.legenda = legenda; }
-    public LocalDateTime getDataEnvio() { return dataEnvio; }
-    public void setDataEnvio(LocalDateTime dataEnvio) { this.dataEnvio = dataEnvio; }
+    public String getUrl() { 
+        return url; 
+    }
+    public void setUrl(String url) { 
+        this.url = url; 
+    }
+    public String getLegenda() { 
+        return legenda; 
+    }
+    public void setLegenda(String legenda) { 
+        this.legenda = legenda; 
+    }
+    public LocalDateTime getDataEnvio() { 
+        return dataEnvio; 
+    }
+    public void setDataEnvio(LocalDateTime dataEnvio) { 
+        this.dataEnvio = dataEnvio; 
+    }
 }

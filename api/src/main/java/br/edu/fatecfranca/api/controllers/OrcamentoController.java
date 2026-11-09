@@ -65,6 +65,7 @@ public class OrcamentoController {
 
         Orcamento orcamentoAtualizado = service.atualizarStatus(id, request.getStatus());
 
+
         return ResponseEntity.ok(orcamentoAtualizado);
     }
 

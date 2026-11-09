@@ -4,13 +4,14 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import br.edu.fatecfranca.api.enums.StatusSolicitacao;
 import br.edu.fatecfranca.api.models.Solicitacao;
 
 public interface SolicitacaoRepository extends MongoRepository<Solicitacao, String> {
     List<Solicitacao> findByClienteId(String clienteId);
 
-    List<Solicitacao> findByStatusIgnoreCase(String status);
+    List<Solicitacao> findByStatus(StatusSolicitacao status);
 
-    List<Solicitacao> findByClienteIdAndStatusIgnoreCase(String clienteId, String status);
+    List<Solicitacao> findByClienteIdAndStatus(String clienteId, StatusSolicitacao status);
     
 }

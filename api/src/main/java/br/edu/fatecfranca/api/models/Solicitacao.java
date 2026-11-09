@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import br.edu.fatecfranca.api.enums.StatusSolicitacao;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -27,7 +29,7 @@ public class Solicitacao {
     @Valid
     private List<Foto> fotos;
     private LocalDateTime data;
-    private String status;
+    private StatusSolicitacao status;
 
     public Solicitacao() {
     }
@@ -72,12 +74,12 @@ public class Solicitacao {
          this.data = data;
          }
 
-    public String getStatus() {
+    public StatusSolicitacao getStatus() {
          return status; 
 
         }
     
-    public void setStatus(String status) {
+    public void setStatus(StatusSolicitacao status) {
          this.status = status; 
         }
 }
