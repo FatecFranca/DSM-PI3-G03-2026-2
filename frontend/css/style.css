@@ -406,3 +406,16 @@ input[type="checkbox"] {
 .cabecalho-pagina + .card {
     margin-top: 0;   
 }
+
+/* ===== Minhas solicitações ===== */
+#listaSolicitacoes {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.foto-solicitacao {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;     
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
