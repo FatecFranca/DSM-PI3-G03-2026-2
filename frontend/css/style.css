@@ -419,3 +419,13 @@ input[type="checkbox"] {
     border-radius: 8px;
     margin-bottom: 10px;
 }
+
+/* ===== Painel do prestador ===== */
+#listaPedidos {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.form-orcamento {
+    text-align: left;
+    margin-top: 12px;
+}
