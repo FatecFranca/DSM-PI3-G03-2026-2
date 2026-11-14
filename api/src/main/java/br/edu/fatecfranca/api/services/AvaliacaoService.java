@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import br.edu.fatecfranca.api.enums.StatusOrcamento;
+
 import br.edu.fatecfranca.api.models.Avaliacao;
 import br.edu.fatecfranca.api.models.Orcamento;
 import br.edu.fatecfranca.api.models.Solicitacao;
@@ -51,7 +51,7 @@ public class AvaliacaoService {
     public Avaliacao criar(Avaliacao avaliacao) {
         Orcamento orcamento = orcamentoRepository.findById(avaliacao.getOrcamentoId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Orçamento não encontrado"));
-        if (orcamento.getStatus() != StatusOrcamento.CONCLUIDO) {
+        if (!"CONCLUIDO".equals(orcamento.getStatus())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "O serviço precisa estar concluído antes da avaliação");
         }
         if (repository.existsByOrcamentoId(avaliacao.getOrcamentoId())) {

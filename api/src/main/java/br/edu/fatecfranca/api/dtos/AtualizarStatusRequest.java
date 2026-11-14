@@ -1,21 +1,12 @@
 package br.edu.fatecfranca.api.dtos;
 
-import br.edu.fatecfranca.api.enums.StatusOrcamento;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
-public class AtualizarStatusRequest {
-    
-    @NotNull(message = "O status é obrigatório e deve ser um valor válido")
-    private StatusOrcamento status;
+// O que o front manda para aceitar ou recusar um orçamento
+public record AtualizarStatusRequest(
 
-    public AtualizarStatusRequest() {
-    }
-
-    public StatusOrcamento getStatus() { 
-        return status; 
-    }
-
-    public void setStatus(StatusOrcamento status) { 
-        this.status = status; 
-    }
+        @NotBlank(message = "O status é obrigatório.")
+        @Pattern(regexp = "ACEITO|RECUSADO", message = "O status deve ser ACEITO ou RECUSADO.")
+        String status) {
 }

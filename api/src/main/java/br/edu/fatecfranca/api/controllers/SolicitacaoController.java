@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.fatecfranca.api.dtos.SolicitacaoResponse;
 import br.edu.fatecfranca.api.models.Solicitacao;
 import br.edu.fatecfranca.api.services.SolicitacaoService;
 import jakarta.validation.Valid;
@@ -19,40 +20,40 @@ import jakarta.validation.Valid;
 @RequestMapping("/solicitacoes")
 public class SolicitacaoController {
 
-        private final SolicitacaoService service;
+    private final SolicitacaoService service;
 
-        public SolicitacaoController(SolicitacaoService service) {
-                this.service = service;
-        }
+    public SolicitacaoController(SolicitacaoService service) {
+        this.service = service;
+    }
 
-        @GetMapping
-        public List<Solicitacao> listarTodos() {
-                return service.listar(null, null);
-        }
+    @GetMapping
+    public List<SolicitacaoResponse> listarTodos() {
+        return service.listarComDetalhes();
+    }
 
-        @GetMapping("/{id}")
-        public ResponseEntity<Solicitacao> buscarPorId(@PathVariable String id) {
-                return service.buscarPorId(id)
-                                .map(ResponseEntity::ok)
-                                .orElse(ResponseEntity.notFound().build());
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<SolicitacaoResponse> buscarPorId(@PathVariable String id) {
+        return service.buscarComDetalhes(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
-        @GetMapping("/cliente/{clienteId}")
-        public List<Solicitacao> listarPorCliente(@PathVariable String clienteId) {
-                return service.listar(clienteId, null);
-        }
+    @GetMapping("/cliente/{clienteId}")
+    public List<SolicitacaoResponse> listarPorCliente(@PathVariable String clienteId) {
+        return service.listarPorClienteComDetalhes(clienteId);
+    }
 
-        @GetMapping("/status/{status}")
-        public List<Solicitacao> listarPorStatus(@PathVariable String status) {
-                return service.listar(null, status);
-        }
+    @GetMapping("/status/{status}")
+    public List<SolicitacaoResponse> listarPorStatus(@PathVariable String status) {
+        return service.listarPorStatusComDetalhes(status);
+    }
 
-        @PostMapping
-        public ResponseEntity<Solicitacao> criar(@Valid @RequestBody Solicitacao solicitacao) {
-                Solicitacao solicitacaoSalva = service.criar(solicitacao);
+    @PostMapping
+    public ResponseEntity<Solicitacao> criar(@Valid @RequestBody Solicitacao solicitacao) {
+        Solicitacao solicitacaoSalva = service.criar(solicitacao);
 
-                return ResponseEntity
-                                .status(HttpStatus.CREATED)
-                                .body(solicitacaoSalva);
-        }
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(solicitacaoSalva);
+    }
 }

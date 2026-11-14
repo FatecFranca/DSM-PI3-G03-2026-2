@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.fatecfranca.api.dtos.AtualizarStatusRequest;
+import br.edu.fatecfranca.api.dtos.OrcamentoResponse;
 import br.edu.fatecfranca.api.models.Orcamento;
 import br.edu.fatecfranca.api.services.OrcamentoService;
 import jakarta.validation.Valid;
@@ -28,25 +29,25 @@ public class OrcamentoController {
     }
 
     @GetMapping
-    public List<Orcamento> listarTodos() {
-        return service.listar(null, null);
+    public List<OrcamentoResponse> listarTodos() {
+        return service.listarComDetalhes();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Orcamento> buscarPorId(@PathVariable String id) {
-        return service.buscarPorId(id)
+    public ResponseEntity<OrcamentoResponse> buscarPorId(@PathVariable String id) {
+        return service.buscarComDetalhes(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/solicitacao/{solicitacaoId}")
-    public List<Orcamento> listarPorSolicitacao(@PathVariable String solicitacaoId) {
-        return service.listar(solicitacaoId, null);
+    public List<OrcamentoResponse> listarPorSolicitacao(@PathVariable String solicitacaoId) {
+        return service.listarPorSolicitacaoComDetalhes(solicitacaoId);
     }
 
     @GetMapping("/prestador/{prestadorId}")
-    public List<Orcamento> listarPorPrestador(@PathVariable String prestadorId) {
-        return service.listar(null, prestadorId);
+    public List<OrcamentoResponse> listarPorPrestador(@PathVariable String prestadorId) {
+        return service.listarPorPrestadorComDetalhes(prestadorId);
     }
 
     @PostMapping
@@ -63,8 +64,7 @@ public class OrcamentoController {
             @PathVariable String id,
             @Valid @RequestBody AtualizarStatusRequest request) {
 
-        Orcamento orcamentoAtualizado = service.atualizarStatus(id, request.getStatus());
-
+        Orcamento orcamentoAtualizado = service.atualizarStatus(id, request.status());
 
         return ResponseEntity.ok(orcamentoAtualizado);
     }
@@ -75,5 +75,4 @@ public class OrcamentoController {
 
         return ResponseEntity.ok(orcamentoConcluido);
     }
-
 }

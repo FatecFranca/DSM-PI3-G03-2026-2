@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import br.edu.fatecfranca.api.enums.StatusOrcamento;
-import br.edu.fatecfranca.api.enums.StatusSolicitacao;
+import br.edu.fatecfranca.api.dtos.OrcamentoResponse;
 import br.edu.fatecfranca.api.models.Orcamento;
+import br.edu.fatecfranca.api.models.Prestador;
 import br.edu.fatecfranca.api.models.Solicitacao;
 import br.edu.fatecfranca.api.repositories.OrcamentoRepository;
 import br.edu.fatecfranca.api.repositories.PrestadorRepository;
@@ -32,141 +32,150 @@ public class OrcamentoService {
         this.prestadorRepository = prestadorRepository;
     }
 
-    public List<Orcamento> listar(String solicitacaoId, String prestadorId) {
-        if (solicitacaoId != null && !solicitacaoId.isBlank()
-                && prestadorId != null && !prestadorId.isBlank()) {
-            return repository.findBySolicitacaoIdAndPrestadorId(
-                    solicitacaoId, prestadorId);
-        }
+    // Este método monta uma resposta para o GET de /orcamentos
+    // incluindo os dados da solicitação e do prestador
+    private OrcamentoResponse montarResposta(Orcamento orcamento) {
+        Solicitacao solicitacao = solicitacaoRepository.findById(orcamento.getSolicitacaoId())
+                .orElse(null);
 
-        if (solicitacaoId != null && !solicitacaoId.isBlank()) {
-            return repository.findBySolicitacaoId(solicitacaoId);
-        }
+        Prestador prestador = prestadorRepository.findById(orcamento.getPrestadorId())
+                .orElse(null);
 
-        if (prestadorId != null && !prestadorId.isBlank()) {
-            return repository.findByPrestadorId(prestadorId);
-        }
+        return new OrcamentoResponse(
+                orcamento.getId(),
+                orcamento.getSolicitacaoId(),
+                orcamento.getPrestadorId(),
+                orcamento.getValor(),
+                orcamento.getPrazoDias(),
+                orcamento.getMensagem(),
+                orcamento.getStatus(),
+                orcamento.getDataEnvio(),
+                solicitacao,
+                prestador);
+    }
 
-        return repository.findAll();
+    public List<OrcamentoResponse> listarComDetalhes() {
+        return repository.findAll().stream()
+                .map(this::montarResposta)
+                .toList();
+    }
+
+    public Optional<OrcamentoResponse> buscarComDetalhes(String id) {
+        return repository.findById(id)
+                .map(this::montarResposta);
+    }
+
+    public List<OrcamentoResponse> listarPorSolicitacaoComDetalhes(String solicitacaoId) {
+        if (!solicitacaoRepository.existsById(solicitacaoId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Solicitação não encontrada.");
+        }
+        return repository.findBySolicitacaoId(solicitacaoId).stream()
+                .map(this::montarResposta)
+                .toList();
+    }
+
+    public List<OrcamentoResponse> listarPorPrestadorComDetalhes(String prestadorId) {
+        if (!prestadorRepository.existsById(prestadorId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Prestador não encontrado.");
+        }
+        return repository.findByPrestadorId(prestadorId).stream()
+                .map(this::montarResposta)
+                .toList();
     }
 
     public Optional<Orcamento> buscarPorId(String id) {
         return repository.findById(id);
     }
 
-    public Orcamento criar(Orcamento orcamento) {
-        Solicitacao solicitacao = solicitacaoRepository
-                .findById(orcamento.getSolicitacaoId())
+    // Busca o orçamento ou devolve 404
+    private Orcamento buscarOuFalhar(String id) {
+        return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Solicitação não encontrada"));
+                        HttpStatus.NOT_FOUND, "Orçamento não encontrado."));
+    }
+
+    // Busca a solicitação do orçamento ou devolve 404
+    private Solicitacao buscarSolicitacao(String solicitacaoId) {
+        return solicitacaoRepository.findById(solicitacaoId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Solicitação não encontrada."));
+    }
+
+    public Orcamento criar(Orcamento orcamento) {
+        Solicitacao solicitacao = buscarSolicitacao(orcamento.getSolicitacaoId());
 
         if (!prestadorRepository.existsById(orcamento.getPrestadorId())) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Prestador não encontrado");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Prestador não encontrado.");
         }
 
-        StatusSolicitacao statusSolicitacao = solicitacao.getStatus();
-
-        if (statusSolicitacao != StatusSolicitacao.ABERTA
-                && statusSolicitacao != StatusSolicitacao.ORCAMENTO_ENVIADO) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    "A solicitação não aceita novos orçamentos");
+        // só aceita orçamento enquanto o pedido está aberto
+        if (!"ABERTA".equals(solicitacao.getStatus())
+                && !"ORCAMENTO_ENVIADO".equals(solicitacao.getStatus())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "A solicitação não aceita novos orçamentos.");
         }
 
         if (repository.existsBySolicitacaoIdAndPrestadorId(
                 orcamento.getSolicitacaoId(), orcamento.getPrestadorId())) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    "Este prestador já enviou orçamento para a solicitação");
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Este prestador já enviou orçamento para a solicitação.");
         }
 
         orcamento.setId(null);
-        orcamento.setStatus(StatusOrcamento.PENDENTE);
+        orcamento.setStatus("PENDENTE");
         orcamento.setDataEnvio(LocalDateTime.now());
 
-        solicitacao.setStatus(StatusSolicitacao.ORCAMENTO_ENVIADO);
+        solicitacao.setStatus("ORCAMENTO_ENVIADO");
         solicitacaoRepository.save(solicitacao);
 
         return repository.save(orcamento);
     }
 
-    public Orcamento atualizarStatus(String id, StatusOrcamento novoStatus) {
-    if (novoStatus != StatusOrcamento.ACEITO
-            && novoStatus != StatusOrcamento.RECUSADO) {
-        throw new ResponseStatusException(
-                HttpStatus.BAD_REQUEST,
-                "Status permitido: ACEITO ou RECUSADO");
-    }
+    // novoStatus já chega validado pelo AtualizarStatusRequest: ACEITO ou RECUSADO
+    public Orcamento atualizarStatus(String id, String novoStatus) {
+        Orcamento orcamento = buscarOuFalhar(id);
 
-        Orcamento orcamento = repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Orçamento não encontrado"));
-
-        if (orcamento.getStatus() != StatusOrcamento.PENDENTE) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    "Somente orçamentos pendentes podem ser decididos");
+        if (!"PENDENTE".equals(orcamento.getStatus())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Somente orçamentos pendentes podem ser decididos.");
         }
 
-        Solicitacao solicitacao = solicitacaoRepository
-                .findById(orcamento.getSolicitacaoId())
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Solicitação vinculada não encontrada"));
+        Solicitacao solicitacao = buscarSolicitacao(orcamento.getSolicitacaoId());
 
-        if (novoStatus == StatusOrcamento.ACEITO) {
-            boolean jaExisteAceito =
-                    repository.existsBySolicitacaoIdAndStatus(
-                            orcamento.getSolicitacaoId(),
-                            StatusOrcamento.ACEITO);
-
-            if (jaExisteAceito) {
-                throw new ResponseStatusException(
-                        HttpStatus.CONFLICT,
-                        "Já existe orçamento aceito para esta solicitação");
+        if ("ACEITO".equals(novoStatus)) {
+            if (repository.existsBySolicitacaoIdAndStatus(orcamento.getSolicitacaoId(), "ACEITO")) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT,
+                        "Já existe orçamento aceito para esta solicitação.");
             }
 
-            solicitacao.setStatus(StatusSolicitacao.EM_ANDAMENTO);
+            solicitacao.setStatus("EM_ANDAMENTO");
+            solicitacaoRepository.save(solicitacao);
 
-            List<Orcamento> outrosOrcamentos =
-                    repository.findBySolicitacaoId(
-                            orcamento.getSolicitacaoId());
-
-            for (Orcamento outro : outrosOrcamentos) {
-                if (!outro.getId().equals(id)
-                        && outro.getStatus() == StatusOrcamento.PENDENTE) {
-                    outro.setStatus(StatusOrcamento.RECUSADO);
+            // os outros orçamentos pendentes do mesmo pedido são recusados
+            for (Orcamento outro : repository.findBySolicitacaoId(orcamento.getSolicitacaoId())) {
+                if (!outro.getId().equals(id) && "PENDENTE".equals(outro.getStatus())) {
+                    outro.setStatus("RECUSADO");
                     repository.save(outro);
                 }
             }
         }
 
         orcamento.setStatus(novoStatus);
-        solicitacaoRepository.save(solicitacao);
-
         return repository.save(orcamento);
     }
 
     public Orcamento concluir(String id) {
-        Orcamento orcamento = repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Orçamento não encontrado"));
+        Orcamento orcamento = buscarOuFalhar(id);
 
-        if (orcamento.getStatus() != StatusOrcamento.ACEITO) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT,
-                    "Somente um orçamento aceito pode ser concluído");
+        if (!"ACEITO".equals(orcamento.getStatus())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Somente um orçamento aceito pode ser concluído.");
         }
 
-        Solicitacao solicitacao = solicitacaoRepository
-                .findById(orcamento.getSolicitacaoId())
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "Solicitação vinculada não encontrada"));
+        Solicitacao solicitacao = buscarSolicitacao(orcamento.getSolicitacaoId());
 
-        orcamento.setStatus(StatusOrcamento.CONCLUIDO);
-        solicitacao.setStatus(StatusSolicitacao.CONCLUIDA);
+        orcamento.setStatus("CONCLUIDO");
+        solicitacao.setStatus("CONCLUIDA");
 
         solicitacaoRepository.save(solicitacao);
         return repository.save(orcamento);
