@@ -7,3 +7,6 @@ spring.autoconfigure.exclude=org.springframework.boot.jdbc.autoconfigure.DataSou
 
 # Serve as páginas do front-end (pasta frontend, ao lado da pasta api)
 spring.web.resources.static-locations=file:../frontend/
+
+# Configure a URI do banco no arquivo local application.properties.
+spring.mongodb.uri=
