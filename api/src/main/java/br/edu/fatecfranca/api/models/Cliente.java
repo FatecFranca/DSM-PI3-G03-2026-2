@@ -5,10 +5,14 @@ import java.util.List;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;  
 
 @Document(collection = "clientes")
 public class Cliente {
@@ -30,6 +34,10 @@ public class Cliente {
 
   @Email(message = "Informe um e-mail válido")
   private String email;
+  @NotBlank(message = "A senha é obrigatória")
+  @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres")
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+  private String senha;
 
   @NotEmpty(message = "Informe ao menos um endereço")
   @Valid
@@ -92,6 +100,13 @@ public class Cliente {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+  public String getSenha() {
+    return senha;
+  }
+
+  public void setSenha(String senha) {
+    this.senha = senha;
   }
 
   public List<Endereco> getEnderecos() {

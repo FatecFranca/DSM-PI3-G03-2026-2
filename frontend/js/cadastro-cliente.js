@@ -41,7 +41,9 @@ form.addEventListener("submit", function (evento) {
             mensagem.textContent = "Cadastro realizado com sucesso!";
             form.reset();
          } else {
-            mensagem.textContent = "Erro ao cadastrar. Confira os dados.";
+            resposta.json().then(function (erro) {
+               mensagem.textContent = erro.mensagem || "Erro ao cadastrar. Confira os dados.";
+            });
          }
       })
       .catch(function () {

@@ -8,5 +8,7 @@ import br.edu.fatecfranca.api.models.Prestador;
 
 public interface PrestadorRepository extends MongoRepository<Prestador, String> {
         Optional<Prestador> findByEmail(String email);
+         boolean existsByEmail(String email);
+         boolean existsByEmailAndIdNot(String email, String id);
 
 }

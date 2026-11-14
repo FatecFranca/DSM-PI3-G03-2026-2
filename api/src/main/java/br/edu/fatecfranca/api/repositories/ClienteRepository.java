@@ -9,4 +9,8 @@ import br.edu.fatecfranca.api.models.Cliente;
 
 public interface ClienteRepository extends MongoRepository<Cliente, String> {
     Optional<Cliente> findByEmail(String email);
+    boolean existsByEmail(String email);
+    boolean existsByEmailAndIdNot(String email, String id);
+
 }
+

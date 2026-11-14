@@ -3,7 +3,6 @@ package br.edu.fatecfranca.api.dtos;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-// O que o front manda no login
 public record LoginRequest(
 
         @NotBlank(message = "O e-mail é obrigatório")

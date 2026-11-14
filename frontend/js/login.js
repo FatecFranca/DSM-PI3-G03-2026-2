@@ -15,7 +15,29 @@ form.addEventListener("submit", function (e) {
 
         mensagem.textContent = "";
 
+        fetch("http://localhost:8888/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email, senha: senha })
+        })
+                .then(function (resposta) {
+                        return resposta.json().then(function (dados) {
+                                if (!resposta.ok) {
+                                        mensagem.textContent = dados.mensagem || "E-mail ou senha incorretos.";
+                                        return;
+                                }
 
+                                // guarda quem entrou: {id, nome, tipo}
+                                localStorage.setItem("usuario", JSON.stringify(dados));
 
-        console.log("Login enviado:", email);
+                                if (dados.tipo === "prestador") {
+                                        window.location.href = "painel-prestador.html";
+                                } else {
+                                        window.location.href = "painel.html";
+                                }
+                        });
+                })
+                .catch(function () {
+                        mensagem.textContent = "Não foi possível conectar ao servidor.";
+                });
 });
