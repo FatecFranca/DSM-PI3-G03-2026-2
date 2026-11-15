@@ -160,7 +160,7 @@ O Front-End não precisa de instalação nem de um servidor separado: a própria
 - Orçamentos recebidos: http://localhost:8888/orcamentos.html
 - Painel do prestador: http://localhost:8888/painel-prestador.html
 
-**Por segurança** As páginas internas só abrem com um usuário logado, e cada painel só funciona para o seu tipo de usuário (cliente ou prestador).
+**Por segurança** As páginas internas só abrem com um usuário logado. As telas de orçamentos (cliente) e de pedidos (prestador) conferem o tipo de usuário, e a API valida cada operação, por exemplo, só um cliente cadastrado consegue abrir uma solicitação.
 
 ## O que fazer para testar
 Para começar a utilizar o Apoio, é necessário cadastrar pelo menos um cliente e um prestador.
