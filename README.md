@@ -5,7 +5,7 @@
 
 **Alunos:** Denner Victor Pimenta, Richard Gabriel dos Santos, Tiago William Valeriano Pereira
 
-**Vídeo de demonstração:** [assista no YouTube]
+**Vídeo de demonstração:** assista no YouTube: https://www.youtube.com/playlist?list=PLRzgoQWBAXE8
 
 # Sobre o Projeto
 
